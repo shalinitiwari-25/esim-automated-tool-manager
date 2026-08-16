@@ -1,5 +1,7 @@
 from tool_registry import TOOLS
 from version_checker import is_tool_installed, get_version
+from installer import install_tool
+from updater import update_tool
 
 def check_tool(tool_name):
 
@@ -14,5 +16,28 @@ def check_tool(tool_name):
     
     return get_version(tool_name)
 
-print(check_tool("ngspice"))
-print(check_tool("blender"))
+def install(tool_name):
+     
+    if tool_name not in TOOLS:
+        return "Unknown tool"
+
+    tool = TOOLS[tool_name]
+    executable = tool["executable"]
+
+    if is_tool_installed(executable):
+        return "Already installed"
+
+    return install_tool(tool_name)
+
+def update(tool_name):
+
+    if tool_name not in TOOLS:
+        return "Unknown tool"
+
+    tool = TOOLS[tool_name]
+    executable = tool["executable"]
+
+    if not is_tool_installed(executable):
+        return f'{tool_name} is not installed'
+
+    return update_tool(tool_name)
