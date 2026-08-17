@@ -95,10 +95,16 @@ def test_get_tool_info_installed():
         ):
             result = get_tool_info("ngspice")
 
-            assert result == "ngspice: Installed - ngspice-42"
+            assert result == (
+                "ngspice: Installed - ngspice-42\n"
+                "  Supported OS: Linux, Windows"
+            )
 
 def test_get_tool_info_not_installed():
     with patch("tool_manager.is_tool_installed", return_value=False):
         result = get_tool_info("ngspice")
 
-        assert result == "ngspice: Not installed"
+        assert result == (
+            "ngspice: Not installed\n"
+            "  Supported OS: Linux, Windows"
+        )

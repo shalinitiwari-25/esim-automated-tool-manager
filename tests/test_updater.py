@@ -54,3 +54,15 @@ def test_update_unsupported_os():
         result = update_tool("ngspice")
 
         assert result == "Unsupported operating system: Darwin"
+
+def test_update_success_logs():
+    with patch("updater.subprocess.run") as mock_run:
+        mock_run.return_value.returncode = 0
+
+        with patch("updater.logger.info") as mock_log:
+            result = update_tool("ngspice")
+
+            assert result == "Update successful"
+            mock_log.assert_called_once_with(
+                "Updated ngspice successfully"
+            )

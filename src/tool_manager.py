@@ -50,11 +50,18 @@ def get_tool_info(tool_name):
         return "Unknown tool"
 
     tool = TOOLS[tool_name]
+    supported_os = ", ".join(tool["commands"].keys())
     installed = is_tool_installed(tool["executable"])
 
     if installed:
         version = get_version(tool_name)
-        return f"{tool_name}: Installed - {version}"
+        return (
+            f"{tool_name}: Installed - {version}\n"
+            f"  Supported OS: {supported_os}"
+        )
 
-    return f"{tool_name}: Not installed"
+    return (
+        f"{tool_name}: Not installed\n"
+        f"  Supported OS: {supported_os}"
+    )
 
