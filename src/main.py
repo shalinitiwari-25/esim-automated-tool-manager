@@ -1,4 +1,4 @@
-from tool_manager import check_tool, install, update
+from tool_manager import check_tool, install, update, list_tools, get_tool_info
 import string
 
 def main():
@@ -7,6 +7,7 @@ def main():
         print("1. Check tool")
         print("2. Install tool")
         print("3. Update tool")
+        print("4. List supported tools")
         print("q. Quit")
 
         choice = input("Choose an option: ").strip().lower()
@@ -29,6 +30,12 @@ def main():
             tool_name = input("Enter tool name: ").strip().lower()
             result = update(tool_name)
             print(result)
+        
+        elif choice == "4":
+            print("\nSupported tools:")
+
+            for tool in list_tools():
+                print(get_tool_info(tool))
 
         else:
             print("Invalid option. Please choose 1, 2, 3, or q.")

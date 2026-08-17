@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from tool_manager import check_tool, install, update
+from tool_manager import check_tool, install, update, list_tools, get_tool_info
 
 def test_unknown_tool():
     assert check_tool("blender") == "Unknown tool"
@@ -68,7 +68,6 @@ def test_kicad_linux_commands():
         "sudo", "apt", "install", "-y", "kicad"
     ]
 
-
 def test_kicad_windows_commands():
     from tool_registry import TOOLS
 
@@ -78,3 +77,28 @@ def test_kicad_windows_commands():
     assert windows_commands["install"] == [
         ["choco", "install", "kicad", "-y"]
     ]
+
+def test_list_tools():
+    tools = list_tools()
+
+    assert "ngspice" in tools
+    assert "kicad" in tools
+
+def test_get_tool_info_unknown_tool():
+    assert get_tool_info("blender") == "Unknown tool"
+
+def test_get_tool_info_installed():
+    with patch("tool_manager.is_tool_installed", return_value=True):
+        with patch(
+            "tool_manager.get_version",
+            return_value="ngspice-42"
+        ):
+            result = get_tool_info("ngspice")
+
+            assert result == "ngspice: Installed - ngspice-42"
+
+def test_get_tool_info_not_installed():
+    with patch("tool_manager.is_tool_installed", return_value=False):
+        result = get_tool_info("ngspice")
+
+        assert result == "ngspice: Not installed"

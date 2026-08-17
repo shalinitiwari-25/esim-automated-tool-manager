@@ -26,7 +26,15 @@ def get_version(tool_name):
         text=True
     )
 
-    return result.stdout.strip()
+    output = result.stdout.strip()
+
+    if tool_name == "ngspice":
+        for line in output.splitlines():
+            if "ngspice-" in line:
+                version_part = line.strip("* ").strip()
+                return version_part.split(":")[0].strip()
+
+    return output
 
 def get_os():
     return platform.system()

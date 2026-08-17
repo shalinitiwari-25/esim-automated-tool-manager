@@ -41,3 +41,20 @@ def update(tool_name):
         return f'{tool_name} is not installed'
 
     return update_tool(tool_name)
+
+def list_tools():
+    return list(TOOLS.keys())
+
+def get_tool_info(tool_name):
+    if tool_name not in TOOLS:
+        return "Unknown tool"
+
+    tool = TOOLS[tool_name]
+    installed = is_tool_installed(tool["executable"])
+
+    if installed:
+        version = get_version(tool_name)
+        return f"{tool_name}: Installed - {version}"
+
+    return f"{tool_name}: Not installed"
+
