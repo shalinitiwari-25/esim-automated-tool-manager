@@ -9,6 +9,9 @@ def install_tool(tool_name):
     tool = TOOLS[tool_name]
     os_name = platform.system()
 
+    if os_name not in tool["commands"]:
+        return f"Unsupported operating system: {os_name}"
+
     commands = tool["commands"][os_name]["install"]
 
     for command in commands:
@@ -22,3 +25,9 @@ def install_tool(tool_name):
             return result.stderr or "Installation failed"
 
     return "Installation successful"
+
+def test_install_unsupported_os():
+    with patch("installer.platform.system", return_value="Darwin"):
+        result = install_tool("ngspice")
+
+        assert result == "Unsupported operating system: Darwin"

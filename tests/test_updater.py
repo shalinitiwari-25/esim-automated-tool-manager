@@ -48,3 +48,9 @@ def test_kicad_windows_update_commands():
                 capture_output=True,
                 text=True
             )
+
+def test_update_unsupported_os():
+    with patch("updater.platform.system", return_value="Darwin"):
+        result = update_tool("ngspice")
+
+        assert result == "Unsupported operating system: Darwin"

@@ -9,6 +9,9 @@ def update_tool(tool_name):
     tool = TOOLS[tool_name]
     os_name = platform.system()
 
+    if os_name not in tool["commands"]:
+        return f"Unsupported operating system: {os_name}"
+
     commands = tool["commands"][os_name]["update"]
 
     for command in commands:

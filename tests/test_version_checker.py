@@ -15,3 +15,9 @@ def test_ngspice_version():
         version = get_version("ngspice")
 
     assert version == "ngspice version 45"
+
+def test_unsupported_os():
+    with patch("version_checker.get_os", return_value="Darwin"):
+        result = get_version("ngspice")
+
+        assert result == "Unsupported operating system: Darwin"
