@@ -36,6 +36,26 @@ def get_version(tool_name):
 
     return output
 
+def check_required_version(tool_name):
+    if tool_name not in TOOLS:
+        return "Unknown tool"
+
+    tool = TOOLS[tool_name]
+
+    if "required_version" not in tool:
+        return "No required version specified"
+
+    required_version = tool["required_version"]
+    installed_version = get_version(tool_name)
+
+    if installed_version == f"{tool_name}-{required_version}":
+        return "Correct version"
+
+    return (
+        f"Version mismatch: required {required_version}, "
+        f"installed {installed_version}"
+    )
+
 def get_os():
     return platform.system()
 

@@ -1,5 +1,7 @@
 from unittest.mock import patch, Mock
 from version_checker import is_tool_installed, get_version
+from tool_registry import TOOLS
+from version_checker import check_required_version
 
 def test_ngspice_is_installed():
     assert is_tool_installed("ngspice") is True
@@ -21,3 +23,16 @@ def test_unsupported_os():
         result = get_version("ngspice")
 
         assert result == "Unsupported operating system: Darwin"
+
+def test_required_version():
+    assert TOOLS["ngspice"]["required_version"] == "42"
+
+def test_correct_required_version():
+    with patch("version_checker.get_version", return_value="ngspice-42"):
+        assert check_required_version("ngspice") == "Correct version"
+
+def test_version_mismatch():
+    with patch("version_checker.get_version", return_value="ngspice-41"):
+        result = check_required_version("ngspice")
+
+        assert result == "Version mismatch: required 42, installed ngspice-41"

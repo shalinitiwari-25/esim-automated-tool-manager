@@ -1,7 +1,7 @@
 NGSPICE = {
     "name": "ngspice",
     "executable": "ngspice",
-
+    "required_version": "42",
     "commands": {
         "Linux": {
             "version": ["ngspice", "--version"],
@@ -20,7 +20,6 @@ NGSPICE = {
 KICAD = {
     "name": "kicad",
     "executable": "kicad",
-
     "commands": {
         "Linux": {
             "version": ["kicad", "--version"],

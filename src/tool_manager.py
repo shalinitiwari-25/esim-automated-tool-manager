@@ -1,20 +1,27 @@
 from tool_registry import TOOLS
-from version_checker import is_tool_installed, get_version
+from version_checker import is_tool_installed, get_version, check_required_version
 from installer import install_tool
 from updater import update_tool
 
 def check_tool(tool_name):
 
     if tool_name not in TOOLS:
-        return 'Unknown tool'
-    
+        return "Unknown tool"
+
     tool = TOOLS[tool_name]
     executable = tool["executable"]
-    installed = is_tool_installed(executable)
-    if not installed:
-        return f'{tool_name} is not installed'
-    
-    return get_version(tool_name)
+
+    if not is_tool_installed(executable):
+        return f"{tool_name} is not installed"
+
+    version = get_version(tool_name)
+    version_status = check_required_version(tool_name)
+
+    return (
+        f"{tool_name}\n"
+        f"Installed version: {version}\n"
+        f"Version status: {version_status}"
+    )
 
 def install(tool_name):
      
@@ -64,4 +71,3 @@ def get_tool_info(tool_name):
         f"{tool_name}: Not installed\n"
         f"  Supported OS: {supported_os}"
     )
-
