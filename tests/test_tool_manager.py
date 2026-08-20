@@ -93,12 +93,17 @@ def test_get_tool_info_installed():
             "tool_manager.get_version",
             return_value="ngspice-42"
         ):
-            result = get_tool_info("ngspice")
+            with patch(
+                "tool_manager.check_for_update",
+                return_value="Already up to date"
+            ):
+                result = get_tool_info("ngspice")
 
-            assert result == (
-                "ngspice: Installed - ngspice-42\n"
-                "  Supported OS: Linux, Windows"
-            )
+                assert result == (
+                    "ngspice: Installed - ngspice-42\n"
+                    "  Supported OS: Linux, Windows\n"
+                    "  Update status: Already up to date"
+                )
 
 def test_get_tool_info_not_installed():
     with patch("tool_manager.is_tool_installed", return_value=False):

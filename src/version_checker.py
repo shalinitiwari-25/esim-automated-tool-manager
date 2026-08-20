@@ -2,6 +2,7 @@ import shutil
 import subprocess
 from tool_registry import TOOLS
 import platform
+from logger import logger
 
 def is_tool_installed(executable_name):
     path = shutil.which(executable_name)
@@ -10,12 +11,14 @@ def is_tool_installed(executable_name):
 def get_version(tool_name):
 
     if tool_name not in TOOLS:
+        logger.warning(f"Unknown tool: {tool_name}")
         return "Unknown tool"
 
     tool = TOOLS[tool_name]
     os_name = get_os()
 
     if os_name not in tool["commands"]:
+        logger.warning(f"Unsupported OS for {tool_name}: {os_name}")
         return f"Unsupported operating system: {os_name}"
 
     command = tool["commands"][os_name]["version"]
@@ -48,7 +51,7 @@ def check_required_version(tool_name):
     required_version = tool["required_version"]
     installed_version = get_version(tool_name)
 
-    if installed_version == f"{tool_name}-{required_version}":
+    if required_version in installed_version:
         return "Correct version"
 
     return (

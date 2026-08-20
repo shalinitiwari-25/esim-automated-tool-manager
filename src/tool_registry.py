@@ -6,13 +6,16 @@ NGSPICE = {
         "Linux": {
             "version": ["ngspice", "--version"],
             "install": [["sudo", "apt", "install", "-y", "ngspice"]],
-            "update": [["sudo", "apt", "install", "--only-upgrade", "-y", "ngspice"]]
+            "update": [["sudo", "apt", "install", "--only-upgrade", "-y", "ngspice"]],
+            "check_update": ["apt-cache", "policy", "ngspice"]
         },
 
         "Windows": {
             "version": ["ngspice", "--version"],
             "install": [["choco", "install", "ngspice", "-y"]],
-            "update": [["choco", "upgrade", "ngspice", "-y"]]
+            "update": [["choco", "upgrade", "ngspice", "-y"]],
+            "check_update": ["choco", "outdated"]
+
         }
     }
 }
@@ -20,6 +23,7 @@ NGSPICE = {
 KICAD = {
     "name": "kicad",
     "executable": "kicad",
+    "required_version": "8.0",
     "commands": {
         "Linux": {
             "version": ["kicad", "--version"],
@@ -30,7 +34,8 @@ KICAD = {
             "update": [
                 ["sudo", "apt", "update"],
                 ["sudo", "apt", "install", "--only-upgrade", "-y", "kicad"]
-            ]
+            ],
+            "check_update": ["apt-cache", "policy", "kicad"]
         },
 
         "Windows": {
@@ -40,7 +45,8 @@ KICAD = {
             ],
             "update": [
                 ["choco", "upgrade", "kicad", "-y"]
-            ]
+            ],
+            "check_update": ["choco", "outdated"]
         }
     }
 }
