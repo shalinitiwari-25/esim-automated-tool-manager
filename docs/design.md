@@ -1,6 +1,6 @@
 # Design Document — Automated Tool Manager (eSim)
 
-## 1. Problem Overview
+## 1. Overview
 
 eSim relies on external tools (Ngspice, KiCad) that must be installed, kept
 up to date, and version-verified for compatibility. Doing this manually is
@@ -104,7 +104,7 @@ A simple menu-driven CLI loop that calls into `tool_manager.py`. Options:
 check a tool, install a tool, update a tool (check + update), list all
 supported tools with status, and check-only for updates.
 
-## 4. Data Flow Example — Update With Check
+## 4. Data Flow Example
 User selects "Update tool" → main.py
 → tool_manager.update_with_check(tool_name)
 → tool_manager.check_update(tool_name)
@@ -127,20 +127,9 @@ don't depend on what's actually installed on the machine running them.
 This mirrors real usage: OS-specific branches (Linux/Windows) are each
 tested independently by mocking `platform.system()`'s return value.
 
-## 6. Requirements Coverage
 
-- **Requirement 2 (Update and Upgrade System)** — fully implemented:
-  update checking (`check_for_update`), and updating with minimal manual
-  intervention (`update_with_check`)
-- **Requirement 5 (User Interface)** — fully implemented: CLI menu,
-  installed/version/update-status visibility via `get_tool_info`, and a
-  full logging trail across all modules
+## 6. Future Work
 
-## 7. Known Limitations / Future Work
-
-- macOS is not currently supported (only Linux and Windows)
-- No Homebrew integration
-- Tool Installation Management does not yet pin/enforce a specific version
-  during install — it only detects mismatches after the fact
-- Configuration Handling (PATH/env setup) and Dependency Checking are not
-  yet implemented
+- macOS support
+- Homebrew integration
+- Configuration Handling (PATH/env setup) and Dependency Checking 
