@@ -1,19 +1,8 @@
 # esim-automated-tool-manager
 
-An automated tool manager for [eSim](https://esim.fossee.in/), built for
-FOSSEE Fall Internship Task 5. It automates installing, checking, and
+An automated tool manager automates installing, checking, and
 updating external tools (Ngspice, KiCad) that eSim depends on, so users
 don't have to manage them manually.
-
-## Features Implemented
-
-This project satisfies **2 of the 5 required tasks** — see
-[`docs/design.md`](docs/design.md) for full design details.
-
-- ✅ **Update and Upgrade System** — checks for available updates and
-  applies them automatically
-- ✅ **User Interface** — CLI to check, install, update, and list tools,
-  with full action logging
 
 See [`docs/design.md`](docs/design.md) for the full architecture and
 module breakdown.
